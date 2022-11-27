@@ -9,7 +9,7 @@ const Banner = () => {
                 <div>
                     <h1 className="text-5xl font-bold">Find Your Dream Instrument</h1>
                     <p className="py-6">Join the millions of music lovers who use MusicSpot to find everything they need to make music.</p>
-                    <button className="btn btn-primary">Get Started</button>
+                    <button className="btn rounded-none btn-primary">Get Started</button>
                 </div>
             </div>
         </div>
