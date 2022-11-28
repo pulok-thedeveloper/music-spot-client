@@ -5,8 +5,8 @@ import { AuthContext } from '../../../context/AuthProvider';
 import avatar from '../../../assets/avatar.jpg'
 
 const Navbar = () => {
-    const [categories, setCategories] = useState([]);
-    const { user, logOut } = useContext(AuthContext);
+    const { user, logOut} = useContext(AuthContext);
+
 
     const handleLogOut = () => {
         logOut()
@@ -14,29 +14,8 @@ const Navbar = () => {
             .catch(err => console.log(err));
     }
 
-    useEffect(() => {
-        fetch('categories.json')
-            .then(res => res.json())
-            .then(data => setCategories(data))
-    }, [])
-
-    const categoriyList = <>
-        {
-            categories.map(category => <li key={category._id}><Link to={`/category/${category.name}`}>{category.name}</Link></li>)
-        }
-    </>
-
     const menuItems = <>
         <li><Link to='/'>Home</Link></li>
-        <li tabIndex={0}>
-            <Link to='/allproducts' className="justify-between">
-                Products
-                <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
-            </Link>
-            <ul className="p-2 bg-base-200 z-10">
-                {categoriyList}
-            </ul>
-        </li>
         <li><Link to='/blogs'>Blogs</Link></li>
 
     </>
@@ -72,7 +51,7 @@ const Navbar = () => {
                             </label>
                             <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                                 {
-                                    user?.uid && <li><Link to='/myorders'>My Orders</Link></li>
+                                    user?.uid && <li><Link to='/dashboard'>Dashboard</Link></li>
                                 }
                                 <li><button onClick={handleLogOut}>Sign Out</button></li>
                             </ul>

@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import toast from 'react-hot-toast';
+import { AuthContext } from '../../../context/AuthProvider';
 
-const BookingModal = ({ modalProduct }) => {
+const BookingModal = ({ modalProduct, setModalProduct }) => {
+    const {user} = useContext(AuthContext)
 
-    const { productName, resalePrice } = modalProduct;
+
+    const { productName, resalePrice} = modalProduct;
 
     const handleModal =event =>{
         event.preventDefault();
         const form = event.target;
+        const pName = productName;
         const name = form.name.value;
         const email = form.email.value;
         const price = form.price.value;
@@ -14,10 +19,32 @@ const BookingModal = ({ modalProduct }) => {
         const location = form.location.value;
 
         const modalData = {
-            name,email,price,phone,location
+            name,
+            productName: pName,
+            email,
+            price,
+            phone,
+            location
         }
 
-        console.log(modalData)
+        fetch('http://localhost:5000/bookings', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(modalData)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.acknowledged) {
+                    setModalProduct(null)
+                    toast.success('Booked Successfuly');
+                }
+                else{
+                    toast.error(data.message);
+                }
+            })
 
     }
 
@@ -29,9 +56,9 @@ const BookingModal = ({ modalProduct }) => {
                     <label htmlFor="booking-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                     <h3 className="text-lg font-bold mb-4">{productName}</h3>
                     <form onSubmit={handleModal}>
-                        <input name="name" type="text" placeholder="Name" className="input input-bordered w-full mb-3" disabled/>
+                        <input name="name" type="text" value={user.displayName} className="input input-bordered w-full mb-3" disabled/>
 
-                        <input name="email" type="email" placeholder="Email Address" className="input input-bordered w-full mb-3" disabled/>
+                        <input name="email" type="email" value={user.email} className="input input-bordered w-full mb-3" disabled/>
 
                         <input name="price" type="text" value={resalePrice} className="input input-bordered w-full mb-3" disabled/>
 

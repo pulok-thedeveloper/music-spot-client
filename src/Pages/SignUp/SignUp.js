@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 
 const SignUp = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const { createUser} = useContext(AuthContext);
+    const { createUser, updateUser } = useContext(AuthContext);
     const [signUpError, setSignUPError] = useState('');
 
     const handleSignUp = data => {
@@ -17,8 +17,16 @@ const SignUp = () => {
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user
-                toast('Account Created Successfully')
                 console.log(user)
+                toast('Account Created Successfully')
+                const userInfo = {
+                    displayName: data.name
+                }
+                updateUser(userInfo)
+                    .then(() => {
+                        saveUser(data.name, data.email, data.role);
+                    })
+                    .catch(err => console.log(err));
             })
             .catch(error => {
                 console.log(error)
@@ -26,6 +34,26 @@ const SignUp = () => {
             });
 
     }
+
+    const saveUser = (name, email, role) => {
+        const newUser = {
+            email: email,
+            name: name,
+            role: role,
+        }
+
+        fetch('http://localhost:5000/users', {
+            method: "POST",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(newUser)
+        })
+            .then(res => res.json())
+            .then(data => {
+            })
+    }
+
     return (
         <div>
             <Navbar></Navbar>

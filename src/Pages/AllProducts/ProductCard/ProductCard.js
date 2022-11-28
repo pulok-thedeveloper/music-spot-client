@@ -3,7 +3,7 @@ import React from 'react';
 const ProductCard = ({ product, setModalProduct }) => {
 
 
-    const { picture, productName, location, resalePrice, originalPrice, useYears, sellerName } = product;
+    const { picture, productName, location, resalePrice, originalPrice, useYears, sellerName, publishDate } = product;
 
 
     return (
@@ -16,6 +16,7 @@ const ProductCard = ({ product, setModalProduct }) => {
                 <p>Used: {useYears} years</p>
                 <p className='font-semibold'>{sellerName}</p>
                 <p>{location}</p>
+                <p>Publish Date: {publishDate}</p>
                 <div className="card-actions">
                     <label onClick={()=>setModalProduct(product)} htmlFor="booking-modal" className="btn w-full btn-primary rounded-none">Book Now</label>
                 </div>
