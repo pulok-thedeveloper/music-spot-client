@@ -2,6 +2,7 @@ import { format } from 'date-fns';
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider';
 
 const AddProduct = () => {
@@ -10,6 +11,7 @@ const AddProduct = () => {
     const publishDate = format(new Date(), 'PP')
     const { user} = useContext(AuthContext);
     const imageHostKey = process.env.REACT_APP_imgbb_key;
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch('http://localhost:5000/categories')
@@ -58,6 +60,7 @@ const AddProduct = () => {
                         .then(res => res.json())
                         .then(result => {
                             console.log(result);
+                            navigate('/dashboard/myproducts')
                             toast.success('Product Added Successfully');
                         })
                 }

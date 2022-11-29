@@ -1,21 +1,23 @@
 import React, { useContext, useState } from 'react';
 import Navbar from '../Shared/Navbar/Navbar';
 import image from '../../assets/login.png'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../context/AuthProvider';
 import toast from 'react-hot-toast';
 import useToken from '../../hooks/useToken';
+import { GoogleAuthProvider } from 'firebase/auth';
 
 const SignUp = () => {
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
-    const { createUser, updateUser } = useContext(AuthContext);
+    const { createUser, updateUser, googleSignIn } = useContext(AuthContext);
     const [signUpError, setSignUPError] = useState('');
     const [createdUserEmail, setCreatedUserEmail] = useState('');
     const [token] = useToken(createdUserEmail);
     const navigate = useNavigate();
+    const googleAuthProvider = new GoogleAuthProvider();
 
-    if(token){
+    if (token) {
         navigate('/');
     }
 
@@ -41,6 +43,24 @@ const SignUp = () => {
             });
 
     }
+
+    const handleGoogleSignIn = () => {
+        setSignUPError('');
+        googleSignIn(googleAuthProvider)
+            .then(result => {
+                const user = result.user
+                console.log(user)
+
+                const role = 'buyer'
+                saveUser(user.displayName, user.email, role);
+
+            })
+            .catch(error => {
+                console.log(error)
+                setSignUPError(error.message)
+            });
+    }
+
 
     const saveUser = (name, email, role) => {
         const newUser = {
@@ -130,7 +150,7 @@ const SignUp = () => {
 
                     <p>Already have an account? <Link className='text-primary' to="/login">Login</Link></p>
                     <div className="divider">OR</div>
-                    <button className='btn btn-outline w-full'>CONTINUE WITH GOOGLE</button>
+                    <button onClick={handleGoogleSignIn} className='btn btn-outline w-full'>CONTINUE WITH GOOGLE</button>
                 </div>
 
             </div>

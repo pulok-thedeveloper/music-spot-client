@@ -5,19 +5,22 @@ import image from '../../assets/login.png'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider';
 import useToken from '../../hooks/useToken';
+import { GoogleAuthProvider } from 'firebase/auth';
+import toast from 'react-hot-toast';
 
 const Login = () => {
-    const { register, formState: { errors }, handleSubmit } = useForm()
-    const { signIn } = useContext(AuthContext);
+    const { register, formState: { errors }, handleSubmit, reset } = useForm()
+    const { signIn, googleSignIn } = useContext(AuthContext);
     const [loginError, setLoginError] = useState('');
     const [loginUserEmail, setLoginUserEmail] = useState('');
     const [token] = useToken(loginUserEmail);
     const location = useLocation();
     const navigate = useNavigate();
+    const googleAuthProvider = new GoogleAuthProvider();
 
     const from = location.state?.from?.pathname || '/';
 
-    if(token){
+    if (token) {
         navigate(from, { replace: true });
     }
 
@@ -28,6 +31,7 @@ const Login = () => {
             .then(result => {
                 const user = result.user
                 console.log(user)
+                reset();
                 setLoginUserEmail(data.email);
             })
             .catch(err => {
@@ -35,6 +39,46 @@ const Login = () => {
                 setLoginError(err.message)
             });
     }
+
+    const handleGoogleSignIn = () => {
+        setLoginError('');
+        googleSignIn(googleAuthProvider)
+            .then(result => {
+                const user = result.user
+                console.log(user)
+                const role = 'buyer'
+                saveUser(user.displayName, user.email, role);
+            })
+            .catch(error => {
+                console.log(error)
+                setLoginError(error.message)
+            });
+    }
+
+
+    const saveUser = (name, email, role) => {
+        const newUser = {
+            email: email,
+            name: name,
+            role: role,
+        }
+
+        fetch('http://localhost:5000/users', {
+            method: "POST",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(newUser)
+        })
+            .then(res => res.json())
+            .then(data => {
+                    console.log(data.acknowledged)
+                    setLoginUserEmail(email);
+
+            })
+    }
+
+
     return (
         <div>
             <Navbar></Navbar>
@@ -70,7 +114,7 @@ const Login = () => {
                     </form>
                     <p>New User? <Link className='text-primary' to="/signup">Create new Account</Link></p>
                     <div className="divider">OR</div>
-                    <button className='btn btn-outline w-full'>CONTINUE WITH GOOGLE</button>
+                    <button onClick={handleGoogleSignIn} className='btn btn-outline w-full'>CONTINUE WITH GOOGLE</button>
                 </div>
 
             </div>
