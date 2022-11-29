@@ -21,10 +21,11 @@ const MyProducts = () => {
             <div className="overflow-x-auto">
                 <table className="table w-full">
                     <thead>
-                        <tr>
+                        <tr className='text-center'>
                             <th></th>
                             <th>Items</th>
                             <th>Price</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -41,8 +42,12 @@ const MyProducts = () => {
                                     </div>
                                     {product.productName}
                                 </td>
-                                <td>{product.price}</td>
-                                <td><button className='btn btn-primary'>Payment</button></td>
+                                <td>{product.resalePrice}</td>
+                                <td>{product.status}</td>
+                                <td>
+                                <button className='btn btn-sm btn-primary mr-3'>Advertise</button>
+                                <button className='btn btn-sm btn-error'>Delete</button>
+                                </td>
                             </tr>)
                         }
                     </tbody>
