@@ -7,6 +7,7 @@ import FilterProducts from "../../Pages/AllProducts/FilterProducts/FilterProduct
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
 import MyOrders from "../../Pages/MyOrders/MyOrders";
+import MyProducts from "../../Pages/MyProducts/MyProducts";
 import SignUp from "../../Pages/SignUp/SignUp";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
@@ -26,13 +27,13 @@ const router = createBrowserRouter([
 
             {
                 path: '/category/:name',
-                element: <FilterProducts></FilterProducts>
+                element: <PrivateRoute><FilterProducts></FilterProducts></PrivateRoute>
             },
         ]
     },
     {
         path: '/dashboard',
-        element: <Dashboard></Dashboard>,
+        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
         children: [
             {
                 path: '/dashboard',
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/addproduct',
                 element: <AddProduct></AddProduct>
+            },
+            {
+                path: '/dashboard/myproducts',
+                element: <MyProducts></MyProducts>
             },
 
         ]

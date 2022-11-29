@@ -1,12 +1,14 @@
 import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthProvider';
 
 const BookingModal = ({ modalProduct, setModalProduct }) => {
-    const {user} = useContext(AuthContext)
+    const {user} = useContext(AuthContext);
+    const navigate = useNavigate();
 
 
-    const { productName, resalePrice} = modalProduct;
+    const { productName, resalePrice, picture} = modalProduct;
 
     const handleModal =event =>{
         event.preventDefault();
@@ -24,7 +26,8 @@ const BookingModal = ({ modalProduct, setModalProduct }) => {
             email,
             price,
             phone,
-            location
+            location,
+            picture
         }
 
         fetch('http://localhost:5000/bookings', {
@@ -40,6 +43,7 @@ const BookingModal = ({ modalProduct, setModalProduct }) => {
                 if (data.acknowledged) {
                     setModalProduct(null)
                     toast.success('Booked Successfuly');
+                    navigate('/dashboard')
                 }
                 else{
                     toast.error(data.message);

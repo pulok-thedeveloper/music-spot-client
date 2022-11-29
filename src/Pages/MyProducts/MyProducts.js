@@ -1,30 +1,22 @@
-import { useQuery } from '@tanstack/react-query';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../context/AuthProvider';
 
-const MyOrders = () => {
+const MyProducts = () => {
+    const [myproducts, setMyProducts] = useState([]);
     const { user } = useContext(AuthContext);
-
-    const url = `http://localhost:5000/bookings?email=${user?.email}`;
-
-    const { data: bookings = [] } = useQuery({
-        queryKey: ['bookings', user?.email],
-        queryFn: async () => {
-            const res = await fetch(url, {
-                headers:{
-                    authorization: `bearer ${localStorage.getItem('accessToken')}`
-                }
-            });
-            const data = await res.json();
-            return data;
-        }
-    })
-
+    console.log(user);
+    useEffect(() => {
+        fetch(`http://localhost:5000/products?email=${user?.email}`)
+            .then(res => res.json())
+            .then(data => {
+                setMyProducts(data);
+            })
+    }, [user?.email])
 
 
     return (
         <div>
-            <h3 className='text-center my-5 text-2xl'>My Orders</h3>
+            <h3 className='text-center my-5 text-2xl'>My Products</h3>
 
             <div className="overflow-x-auto">
                 <table className="table w-full">
@@ -38,18 +30,18 @@ const MyOrders = () => {
                     </thead>
                     <tbody>
                         {
-                            bookings.map((booking, i) => <tr>
+                            myproducts.map((product, i) => <tr>
                                 <th>{i + 1}</th>
 
                                 <td className='flex items-center'>
                                     <div className="avatar">
                                         <div className="mask mask-squircle w-12 h-12">
-                                            <img src={booking.picture} alt="" />
+                                            <img src={product.picture} alt="" />
                                         </div>
                                     </div>
-                                    {booking.productName}
+                                    {product.productName}
                                 </td>
-                                <td>{booking.price}</td>
+                                <td>{product.price}</td>
                                 <td><button className='btn btn-primary'>Payment</button></td>
                             </tr>)
                         }
@@ -60,4 +52,4 @@ const MyOrders = () => {
     );
 };
 
-export default MyOrders;
+export default MyProducts;

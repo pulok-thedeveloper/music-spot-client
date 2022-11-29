@@ -1,15 +1,23 @@
 import React, { useContext, useState } from 'react';
 import Navbar from '../Shared/Navbar/Navbar';
 import image from '../../assets/login.png'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../context/AuthProvider';
 import toast from 'react-hot-toast';
+import useToken from '../../hooks/useToken';
 
 const SignUp = () => {
-    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit, reset } = useForm();
     const { createUser, updateUser } = useContext(AuthContext);
     const [signUpError, setSignUPError] = useState('');
+    const [createdUserEmail, setCreatedUserEmail] = useState('');
+    const [token] = useToken(createdUserEmail);
+    const navigate = useNavigate();
+
+    if(token){
+        navigate('/');
+    }
 
     const handleSignUp = data => {
         console.log(data);
@@ -18,7 +26,6 @@ const SignUp = () => {
             .then(result => {
                 const user = result.user
                 console.log(user)
-                toast('Account Created Successfully')
                 const userInfo = {
                     displayName: data.name
                 }
@@ -51,8 +58,17 @@ const SignUp = () => {
         })
             .then(res => res.json())
             .then(data => {
+                if (data.acknowledged) {
+                    setCreatedUserEmail(email);
+                    toast.success('Account Created Successfully')
+                    reset();
+                }
+                else {
+                    toast.error(data.message);
+                }
             })
     }
+
 
     return (
         <div>
