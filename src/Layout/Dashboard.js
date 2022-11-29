@@ -9,7 +9,7 @@ import Navbar from '../Pages/Shared/Navbar/Navbar';
 const Dashboard = () => {
     const { user } = useContext(AuthContext);
     const [isAdmin] = useAdmin(user?.email);
-    const [isSeller] = useSeller(user?.email);
+    const [seller] = useSeller(user?.email);
     const [isBuyer] = useBuyer(user?.email);
 
     return (
@@ -29,7 +29,7 @@ const Dashboard = () => {
                             </>
                         }
                         {
-                            isSeller && <>
+                            seller?.role==='seller' && <>
                                 <li><Link to="/dashboard/addproduct">Add Product</Link></li>
                                 <li><Link to="/dashboard/myproducts">My Products</Link></li>
                             </>

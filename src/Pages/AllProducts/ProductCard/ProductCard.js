@@ -1,9 +1,12 @@
 import React from 'react';
+import useSeller from '../../../hooks/useSeller';
+import { MdVerifiedUser } from 'react-icons/md';
 
 const ProductCard = ({ product, setModalProduct }) => {
 
 
-    const { picture, productName, location, resalePrice, originalPrice, useYears, sellerName, publishDate } = product;
+    const { picture, productName, location, resalePrice, originalPrice, useYears, sellerName, publishDate, email } = product;
+    const [seller] = useSeller(email);
 
 
     return (
@@ -14,11 +17,17 @@ const ProductCard = ({ product, setModalProduct }) => {
                 <p className='text-lg'>Price: {resalePrice}</p>
                 <p>Original price: {originalPrice}</p>
                 <p>Used: {useYears} years</p>
-                <p className='font-semibold'>{sellerName}</p>
+                <p className='font-semibold flex items-center'>
+                    {sellerName}
+                    {
+                        seller?.verifyStatus === 'verified' &&
+                        <MdVerifiedUser className='fill-blue-800'/>
+                    }
+                </p>
                 <p>{location}</p>
                 <p>Publish Date: {publishDate}</p>
                 <div className="card-actions">
-                    <label onClick={()=>setModalProduct(product)} htmlFor="booking-modal" className="btn w-full btn-primary rounded-none">Book Now</label>
+                    <label onClick={() => setModalProduct(product)} htmlFor="booking-modal" className="btn w-full btn-primary rounded-none">Book Now</label>
                 </div>
             </div>
         </div>
