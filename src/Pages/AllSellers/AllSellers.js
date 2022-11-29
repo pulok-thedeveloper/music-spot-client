@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 const AllSellers = () => {
-    const [allSellers, setAllSellers] = useState([]);
-    useEffect(() => {
-        fetch('http://localhost:5000/users?role=seller')
-            .then(res => res.json())
-            .then(data => {
-                setAllSellers(data);
-            })
-    }, [])
+
+    const {data: allSellers =[]} = useQuery({
+        queryKey: ['allSellers'],
+        queryFn: async() =>{
+            const res = await fetch('http://localhost:5000/users?role=seller');
+            const data = await res.json();
+            return data;
+        }
+    });
+
+
     return (
         <div>
             <h3 className='text-center my-5 text-2xl'>All Sellers</h3>
@@ -31,7 +34,10 @@ const AllSellers = () => {
                                     {seller.name}
                                 </td>
                                 <td>{seller.email}</td>
-                                <td><button className='btn btn-sm btn-error'>Delete</button></td>
+                                <td>
+                                <button className='btn btn-sm btn-success mr-3'>Verify</button>
+                                    <button className='btn btn-sm btn-error'>Delete</button>
+                                </td>
                             </tr>)
                         }
                     </tbody>

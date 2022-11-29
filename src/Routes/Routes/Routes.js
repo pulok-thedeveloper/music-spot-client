@@ -6,11 +6,13 @@ import AllBuyers from "../../Pages/AllBuyers/AllBuyers";
 import AllProducts from "../../Pages/AllProducts/AllProducts";
 import FilterProducts from "../../Pages/AllProducts/FilterProducts/FilterProducts";
 import AllSellers from "../../Pages/AllSellers/AllSellers";
+import AllUsers from "../../Pages/AllUsers/AllUsers";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
 import MyOrders from "../../Pages/MyOrders/MyOrders";
 import MyProducts from "../../Pages/MyProducts/MyProducts";
 import SignUp from "../../Pages/SignUp/SignUp";
+import AdminRoute from "../AdminRoute/AdminRoute";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
@@ -51,13 +53,16 @@ const router = createBrowserRouter([
             },
             {
                 path: '/dashboard/allbuyers',
-                element: <AllBuyers></AllBuyers>
+                element: <AdminRoute><AllBuyers></AllBuyers></AdminRoute>
             },
             {
                 path: '/dashboard/allsellers',
-                element: <AllSellers></AllSellers>
+                element: <AdminRoute><AllSellers></AllSellers></AdminRoute>
             },
-
+            {
+                path: '/dashboard/allusers',
+                element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
+            }
         ]
     },
     {

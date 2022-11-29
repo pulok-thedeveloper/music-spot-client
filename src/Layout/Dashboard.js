@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, Outlet } from 'react-router-dom';
+import { AuthContext } from '../context/AuthProvider';
+import useAdmin from '../hooks/useAdmin';
 import Navbar from '../Pages/Shared/Navbar/Navbar';
 
 const Dashboard = () => {
+    const { user } = useContext(AuthContext);
+    const [isAdmin] = useAdmin(user?.email)
     return (
         <div>
             <Navbar></Navbar>
             <div className="drawer drawer-mobile">
                 <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
-                <div className="drawer-content">
+                <div className="drawer-content mx-6">
                     <Outlet></Outlet>
                 </div>
                 <div className="drawer-side">
@@ -17,8 +21,14 @@ const Dashboard = () => {
                         <li><Link to="/dashboard">My Orders</Link></li>
                         <li><Link to="/dashboard/addproduct">Add Product</Link></li>
                         <li><Link to="/dashboard/myproducts">My Products</Link></li>
-                        <li><Link to="/dashboard/allsellers">All Sellers</Link></li>
-                        <li><Link to="/dashboard/allbuyers">All Buyers</Link></li>
+                        {
+                            isAdmin && <>
+                                <li><Link to="/dashboard/allsellers">All Sellers</Link></li>
+                                <li><Link to="/dashboard/allbuyers">All Buyers</Link></li>
+                                <li><Link to="/dashboard/allusers">All Users</Link></li>
+                            </>
+                        }
+
                     </ul>
 
                 </div>

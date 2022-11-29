@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 const AllBuyers = () => {
-    const [allBuyers, setAllBuyers] = useState([]);
-    useEffect(() => {
-        fetch('http://localhost:5000/users?role=user')
-            .then(res => res.json())
-            .then(data => {
-                setAllBuyers(data);
-            })
-    }, [])
+
+    const {data: allBuyers =[]} = useQuery({
+        queryKey: ['allBuyers'],
+        queryFn: async() =>{
+            const res = await fetch('http://localhost:5000/users?role=buyer');
+            const data = await res.json();
+            return data;
+        }
+    });
     return (
         <div>
             <h3 className='text-center my-5 text-2xl'>All Buyers</h3>
