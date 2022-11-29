@@ -42,6 +42,7 @@ const AddProduct = () => {
                         originalPrice: data.originalPrice,
                         publishDate: publishDate,
                         sellerName: user.displayName,
+                        email: user.email,
                         phone: data.phone,
                         location: data.location,
                         description: data.description,
@@ -146,7 +147,6 @@ const AddProduct = () => {
                     <div className="form-control w-full max-w-xs">
                         <label className="label"> <span className="label-text">Category</span></label>
                         <select className='input input-borderd w-full max-w-xs' {...register("category", { required: true })}>
-                            <option value="" disabled>Select Product Category</option>
                             {
                                 categories.map(category => <option key={category._id} value={category.name}>{category.name}</option>)
                             }

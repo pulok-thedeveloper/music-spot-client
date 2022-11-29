@@ -1,17 +1,44 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import React, { useContext} from 'react';
+import toast from 'react-hot-toast';
 import { AuthContext } from '../../context/AuthProvider';
 
 const MyProducts = () => {
-    const [myproducts, setMyProducts] = useState([]);
     const { user } = useContext(AuthContext);
+
     console.log(user);
-    useEffect(() => {
-        fetch(`http://localhost:5000/products?email=${user?.email}`)
-            .then(res => res.json())
-            .then(data => {
-                setMyProducts(data);
+
+    const url = `http://localhost:5000/products?email=${user?.email}`;
+
+    const { data: myproducts = [], refetch } = useQuery({
+        queryKey: ['myproducts', user?.email],
+        queryFn: async () => {
+            const res = await fetch(url, {
+                headers:{
+                    authorization: `bearer ${localStorage.getItem('accessToken')}`
+                }
+            });
+            const data = await res.json();
+            return data;
+        }
+    })
+
+    const handleDelete = id => {
+        const proceed = window.confirm('Are you sure, you wanna delete this product');
+        if (proceed) {
+            fetch(`http://localhost:5000/products/${id}`, {
+                method: 'DELETE'
             })
-    }, [user?.email])
+                .then(res => res.json())
+                .then(data => {
+                    if (data.deletedCount > 0) {
+                        refetch();
+                        toast("deleted successfully");
+
+                    }
+                })
+        }
+    }
 
 
     return (
@@ -46,7 +73,7 @@ const MyProducts = () => {
                                 <td>{product.status}</td>
                                 <td>
                                 <button className='btn btn-sm btn-primary mr-3'>Advertise</button>
-                                <button className='btn btn-sm btn-error'>Delete</button>
+                                <button onClick={()=>handleDelete(product._id)} className='btn btn-sm btn-error'>Delete</button>
                                 </td>
                             </tr>)
                         }
