@@ -14,7 +14,7 @@ const AddProduct = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('http://localhost:5000/categories')
+        fetch('https://music-spot-server.vercel.app/categories')
             .then(res => res.json())
             .then(data => setCategories(data))
     }, [])
@@ -50,7 +50,7 @@ const AddProduct = () => {
                         useYears: data.useYears
                     }
 
-                    fetch('http://localhost:5000/products', {
+                    fetch('https://music-spot-server.vercel.app/products', {
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json',

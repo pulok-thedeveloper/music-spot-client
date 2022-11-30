@@ -17,7 +17,7 @@ const ProductCard = ({ product, setModalProduct }) => {
         const wishlistData ={...product, userEmail}
         console.log(wishlistData);
 
-        fetch('http://localhost:5000/wishlist', {
+        fetch('https://music-spot-server.vercel.app/wishlist', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

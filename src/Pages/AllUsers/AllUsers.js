@@ -6,14 +6,14 @@ const AllUsers = () => {
     const {data: allUsers =[], refetch} = useQuery({
         queryKey: ['allUsers'],
         queryFn: async() =>{
-            const res = await fetch('http://localhost:5000/users');
+            const res = await fetch('https://music-spot-server.vercel.app/users');
             const data = await res.json();
             return data;
         }
     });
 
     const handleMakeAdmin= id =>{
-        fetch(`http://localhost:5000/users/admin/${id}`, {
+        fetch(`https://music-spot-server.vercel.app/users/admin/${id}`, {
             method: 'PUT',
             headers:{
                 authorization: `bearer ${localStorage.getItem('accessToken')}`

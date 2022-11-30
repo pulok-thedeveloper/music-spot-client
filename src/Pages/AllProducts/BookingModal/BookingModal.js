@@ -30,7 +30,7 @@ const BookingModal = ({ modalProduct, setModalProduct }) => {
             picture
         }
 
-        fetch('http://localhost:5000/bookings', {
+        fetch('https://music-spot-server.vercel.app/bookings', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -44,7 +44,7 @@ const BookingModal = ({ modalProduct, setModalProduct }) => {
                 if (data.acknowledged) {
                     setModalProduct(null)
                     toast.success('Booked Successfuly');
-                    navigate('/dashboard')
+                    navigate('/dashboard/myorders')
                 }
                 else{
                     toast.error(data.message);

@@ -9,7 +9,7 @@ const AdvertiseProducts = () => {
     const { data: advertiseProducts = [] } = useQuery({
         queryKey: ['advertiseProducts'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/advertised');
+            const res = await fetch('https://music-spot-server.vercel.app/advertised');
             const data = await res.json();
             return data;
         }

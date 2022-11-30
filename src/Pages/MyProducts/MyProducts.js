@@ -8,7 +8,7 @@ const MyProducts = () => {
 
     console.log(user);
 
-    const url = `http://localhost:5000/products?email=${user?.email}`;
+    const url = `https://music-spot-server.vercel.app/products?email=${user?.email}`;
 
     const { data: myproducts = [], refetch } = useQuery({
         queryKey: ['myproducts', user?.email],
@@ -26,7 +26,7 @@ const MyProducts = () => {
     const handleDelete = id => {
         const proceed = window.confirm('Are you sure, you wanna delete this product');
         if (proceed) {
-            fetch(`http://localhost:5000/products/${id}`, {
+            fetch(`https://music-spot-server.vercel.app/products/${id}`, {
                 method: 'DELETE'
             })
                 .then(res => res.json())
@@ -41,7 +41,7 @@ const MyProducts = () => {
     }
 
     const handleAdvertise= id =>{
-        fetch(`http://localhost:5000/products/${id}`, {
+        fetch(`https://music-spot-server.vercel.app/products/${id}`, {
             method: 'PUT',
             headers:{
                 authorization: `bearer ${localStorage.getItem('accessToken')}`

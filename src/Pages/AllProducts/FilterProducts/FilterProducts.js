@@ -9,7 +9,7 @@ const FilterProducts = () => {
     const category = localStorage.getItem('category');
 
 
-    const url = `http://localhost:5000/products?category=${category}`;
+    const url = `https://music-spot-server.vercel.app/products?category=${category}`;
 
     const { data: filterProducts = [] } = useQuery({
         queryKey: ['filterProducts', category],

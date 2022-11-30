@@ -5,7 +5,7 @@ import { AuthContext } from '../context/AuthProvider';
 const Wishlist = () => {
     const { user } = useContext(AuthContext);
 
-    const url = `http://localhost:5000/wishlist?email=${user?.email}`;
+    const url = `https://music-spot-server.vercel.app/wishlist?email=${user?.email}`;
 
     const { data: wishlist = [] } = useQuery({
         queryKey: ['wishlist', user?.email],

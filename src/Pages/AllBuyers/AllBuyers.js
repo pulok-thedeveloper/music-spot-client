@@ -6,7 +6,7 @@ const AllBuyers = () => {
     const {data: allBuyers =[], refetch} = useQuery({
         queryKey: ['allBuyers'],
         queryFn: async() =>{
-            const res = await fetch('http://localhost:5000/users?role=buyer');
+            const res = await fetch('https://music-spot-server.vercel.app/users?role=buyer');
             const data = await res.json();
             return data;
         }
@@ -16,7 +16,7 @@ const AllBuyers = () => {
     const handleDelete = id => {
         const proceed = window.confirm('Are you sure, you wanna delete this user');
         if (proceed) {
-            fetch(`http://localhost:5000/users/${id}`, {
+            fetch(`https://music-spot-server.vercel.app/users/${id}`, {
                 method: 'DELETE',
                 headers: {
                     authorization: `bearer ${localStorage.getItem('accessToken')}`
