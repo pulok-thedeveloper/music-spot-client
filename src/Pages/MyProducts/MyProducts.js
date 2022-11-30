@@ -40,6 +40,22 @@ const MyProducts = () => {
         }
     }
 
+    const handleAdvertise= id =>{
+        fetch(`http://localhost:5000/products/${id}`, {
+            method: 'PUT',
+            headers:{
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.modifiedCount > 0){
+                toast.success('Advertised Successfully');
+                refetch();
+            }
+        })
+    }
+
 
     return (
         <div>
@@ -72,7 +88,7 @@ const MyProducts = () => {
                                 <td>{product.resalePrice}</td>
                                 <td>{product.status}</td>
                                 <td>
-                                <button className='btn btn-sm btn-primary mr-3'>Advertise</button>
+                                <button onClick={()=>handleAdvertise(product._id)} className='btn btn-sm btn-primary mr-3'>Advertise</button>
                                 <button onClick={()=>handleDelete(product._id)} className='btn btn-sm btn-error'>Delete</button>
                                 </td>
                             </tr>)

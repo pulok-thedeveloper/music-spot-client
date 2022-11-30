@@ -1,18 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import React, { useState } from 'react';
 import BookingModal from '../BookingModal/BookingModal';
 import ProductCard from '../ProductCard/ProductCard';
 
 const FilterProducts = () => {
     const [modalProduct, setModalProduct] = useState(null)
-    const [filterProducts, setFilterProducts] = useState(null);
+
     const category = localStorage.getItem('category');
-    useEffect(() => {
-        fetch(`http://localhost:5000/products?category=${category}`)
-            .then(res => res.json())
-            .then(data => {
-                setFilterProducts(data);
-            })
-    }, [category])
+
+
+    const url = `http://localhost:5000/products?category=${category}`;
+
+    const { data: filterProducts = [] } = useQuery({
+        queryKey: ['filterProducts', category],
+        queryFn: async () => {
+            const res = await fetch(url, {
+                headers:{
+                    authorization: `bearer ${localStorage.getItem('accessToken')}`
+                }
+            });
+            const data = await res.json();
+            console.log(data);
+            return data;
+        }
+    })
+
     return (
 
         <div>
