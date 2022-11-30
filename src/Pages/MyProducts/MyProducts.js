@@ -88,7 +88,13 @@ const MyProducts = () => {
                                 <td>{product.resalePrice}</td>
                                 <td>{product.status}</td>
                                 <td>
-                                <button onClick={()=>handleAdvertise(product._id)} className='btn btn-sm btn-primary mr-3'>Advertise</button>
+                                {
+                                    product?.status === 'sold' || product.isAdvertise ?
+                                    <button className='btn btn-sm disabled mr-3'>Advertise</button>:
+                                    <button onClick={()=>handleAdvertise(product._id)} className='btn btn-sm btn-primary mr-3'>Advertise</button>
+                                }
+
+                                
                                 <button onClick={()=>handleDelete(product._id)} className='btn btn-sm btn-error'>Delete</button>
                                 </td>
                             </tr>)

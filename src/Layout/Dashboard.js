@@ -18,6 +18,7 @@ const Dashboard = () => {
             <div className="drawer drawer-mobile">
                 <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content mx-6">
+                <h1 className='text-center text-3xl my-6'>Dashboard</h1>
                     <Outlet></Outlet>
                 </div>
                 <div className="drawer-side">
@@ -25,7 +26,7 @@ const Dashboard = () => {
                     <ul className="menu p-4 w-80 text-base-content">
                         {
                             isBuyer && <>
-                            <li><Link to="/dashboard">My Orders</Link></li>
+                            <li><Link to="/dashboard/myorders">My Orders</Link></li>
                             </>
                         }
                         {

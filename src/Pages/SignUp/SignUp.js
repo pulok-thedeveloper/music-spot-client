@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import Navbar from '../Shared/Navbar/Navbar';
 import image from '../../assets/login.png'
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../context/AuthProvider';
 import toast from 'react-hot-toast';
@@ -10,7 +10,7 @@ import { GoogleAuthProvider } from 'firebase/auth';
 
 const SignUp = () => {
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
-    const { createUser, updateUser, googleSignIn } = useContext(AuthContext);
+    const { createUser, updateUser, googleSignIn, user } = useContext(AuthContext);
     const [signUpError, setSignUPError] = useState('');
     const [createdUserEmail, setCreatedUserEmail] = useState('');
     const [token] = useToken(createdUserEmail);
