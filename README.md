@@ -4,6 +4,11 @@ Project Title: Music Spot
 This project was made with ReactJs, Tailwind, DaisyUi, NodeJs, ExpressJs, API.
 Music Spot is an online resale Market.
 
+Livesite: https://music-spot-51606.web.app/
+
+adminEmail: super@man.com
+adminPassword: 123456
+
 ## Available Features
 
 1. To Buy or sell any products user should create an account first.
