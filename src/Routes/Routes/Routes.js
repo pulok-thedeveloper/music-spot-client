@@ -12,6 +12,7 @@ import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
 import MyOrders from "../../Pages/MyOrders/MyOrders";
 import MyProducts from "../../Pages/MyProducts/MyProducts";
+import PaymentGateway from "../../Pages/PaymentGateway/PaymentGateway";
 import SignUp from "../../Pages/SignUp/SignUp";
 import Wishlist from "../../Wishlist/Wishlist";
 import AdminRoute from "../AdminRoute/AdminRoute";
@@ -70,7 +71,12 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/allusers',
                 element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
-            }
+            },
+            {
+                path: '/dashboard/payment/:id',
+                element: <PaymentGateway></PaymentGateway>,
+                loader: ({params}) => fetch(`https://music-spot-server.vercel.app/bookings/${params.id}`)
+            },
         ]
     },
     {

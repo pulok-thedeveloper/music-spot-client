@@ -46,7 +46,7 @@ const Wishlist = () => {
                                     </div>
                                     {wishlist.productName}
                                 </td>
-                                <td>{wishlist.price}</td>
+                                <td>{wishlist.resalePrice}</td>
                                 <td><button className='btn btn-primary btn-sm'>Payment</button></td>
                             </tr>)
                         }
