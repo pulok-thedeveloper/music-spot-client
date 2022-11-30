@@ -12,6 +12,26 @@ const AllSellers = () => {
         }
     });
 
+    const handleDelete = id => {
+        const proceed = window.confirm('Are you sure, you wanna delete this user');
+        if (proceed) {
+            fetch(`http://localhost:5000/users/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    authorization: `bearer ${localStorage.getItem('accessToken')}`
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.deletedCount > 0) {
+                        refetch();
+                        toast.success("deleted successfully");
+
+                    }
+                })
+        }
+    }
+
     const handleVerifySeller = id => {
         fetch(`http://localhost:5000/users/seller/${id}`, {
             method: 'PUT',
@@ -54,11 +74,11 @@ const AllSellers = () => {
                                 <td>
                                     {
                                         seller?.verifyStatus === 'verified' ?
-                                        <button className="btn btn-sm mr-3" disabled>Verified</button>
-                                        :
-                                        <button onClick={()=>handleVerifySeller(seller._id)} className='btn btn-sm btn-success mr-3'>Verify</button>
+                                            <button className="btn btn-sm mr-3" disabled>Verified</button>
+                                            :
+                                            <button onClick={() => handleVerifySeller(seller._id)} className='btn btn-sm btn-success mr-3'>Verify</button>
                                     }
-                                    <button className='btn btn-sm btn-error'>Delete</button>
+                                    <button onClick={()=>handleDelete(seller._id)} className='btn btn-sm btn-error'>Delete</button>
                                 </td>
                             </tr>)
                         }

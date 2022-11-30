@@ -27,6 +27,7 @@ const Dashboard = () => {
                         {
                             isBuyer && <>
                             <li><Link to="/dashboard/myorders">My Orders</Link></li>
+                            <li><Link to="/dashboard/wishlist">Wishlist</Link></li>
                             </>
                         }
                         {

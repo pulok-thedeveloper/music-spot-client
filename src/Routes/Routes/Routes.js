@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import Error404 from "../../Error404/Error404";
 import Dashboard from "../../Layout/Dashboard";
 import Main from "../../Layout/Main";
 import AddProduct from "../../Pages/AddProduct/AddProduct";
@@ -6,6 +7,7 @@ import AllBuyers from "../../Pages/AllBuyers/AllBuyers";
 import FilterProducts from "../../Pages/AllProducts/FilterProducts/FilterProducts";
 import AllSellers from "../../Pages/AllSellers/AllSellers";
 import AllUsers from "../../Pages/AllUsers/AllUsers";
+import Blogs from "../../Pages/Blogs/Blogs";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
 import MyOrders from "../../Pages/MyOrders/MyOrders";
@@ -24,6 +26,10 @@ const router = createBrowserRouter([
             {
                 path: '/',
                 element: <Home></Home>
+            },
+            {
+                path: '/blogs',
+                element: <Blogs></Blogs>
             },
 
             {
@@ -61,6 +67,10 @@ const router = createBrowserRouter([
                 element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
             }
         ]
+    },
+    {
+        path: '*',
+        element: <Error404></Error404>
     },
     {
         path: '/login',

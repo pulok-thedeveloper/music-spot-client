@@ -33,7 +33,7 @@ const MyProducts = () => {
                 .then(data => {
                     if (data.deletedCount > 0) {
                         refetch();
-                        toast("deleted successfully");
+                        toast.success("deleted successfully");
 
                     }
                 })
