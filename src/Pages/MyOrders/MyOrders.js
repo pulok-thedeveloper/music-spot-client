@@ -50,7 +50,7 @@ const MyOrders = () => {
                                     {booking.productName}
                                 </td>
                                 <td>{booking.price}</td>
-                                <td><button className='btn btn-primary'>Payment</button></td>
+                                <td><button className='btn btn-primary btn-sm'>Payment</button></td>
                             </tr>)
                         }
                     </tbody>

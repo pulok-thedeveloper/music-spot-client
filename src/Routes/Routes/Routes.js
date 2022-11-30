@@ -13,6 +13,7 @@ import Login from "../../Pages/Login/Login";
 import MyOrders from "../../Pages/MyOrders/MyOrders";
 import MyProducts from "../../Pages/MyProducts/MyProducts";
 import SignUp from "../../Pages/SignUp/SignUp";
+import Wishlist from "../../Wishlist/Wishlist";
 import AdminRoute from "../AdminRoute/AdminRoute";
 import BuyerRoute from "../BuyerRoute/BuyerRoute";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/myorders',
                 element: <BuyerRoute><MyOrders></MyOrders></BuyerRoute>
+            },
+            {
+                path: '/dashboard/wishlist',
+                element: <BuyerRoute><Wishlist></Wishlist></BuyerRoute>
             },
             {
                 path: '/dashboard/addproduct',
