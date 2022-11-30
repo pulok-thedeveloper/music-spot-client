@@ -8,7 +8,6 @@ const useSeller = email =>{
             fetch(`https://music-spot-server.vercel.app/users/seller/${email}`)
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 setSeller(data);
                 setIsSellerLoading(false);
             })

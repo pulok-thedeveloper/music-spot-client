@@ -15,7 +15,6 @@ const ProductCard = ({ product, setModalProduct }) => {
 
     const handleWishlist =()=>{
         const wishlistData ={...product, userEmail}
-        console.log(wishlistData);
 
         fetch('https://music-spot-server.vercel.app/wishlist', {
             method: 'POST',
@@ -27,7 +26,6 @@ const ProductCard = ({ product, setModalProduct }) => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 if (data.acknowledged) {
                     toast.success('Product added on wishlist');
                     navigate('/dashboard/wishlist')

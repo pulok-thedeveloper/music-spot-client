@@ -20,7 +20,6 @@ const AddProduct = () => {
     }, [])
 
     const handleAdProduct = data => {
-        console.log(data);
         const image = data.image[0];
         const formData = new FormData();
         formData.append('image', image);
@@ -32,7 +31,6 @@ const AddProduct = () => {
             .then(res => res.json())
             .then(imgData => {
                 if (imgData.success) {
-                    console.log(imgData.data.url);
                     const product = {
                         picture: imgData.data.url,
                         productName: data.productName,
@@ -60,7 +58,6 @@ const AddProduct = () => {
                     })
                         .then(res => res.json())
                         .then(result => {
-                            console.log(result);
                             navigate('/dashboard/myproducts')
                             toast.success('Product Added Successfully');
                         })

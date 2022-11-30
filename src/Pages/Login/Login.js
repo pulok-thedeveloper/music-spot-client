@@ -24,13 +24,11 @@ const Login = () => {
         navigate(from, { replace: true });
     }
 
-    const handleLogin = data => {
-        console.log(data);
+    const handleLogin = data => {        
         setLoginError('');
         signIn(data.email, data.password)
             .then(result => {
-                const user = result.user
-                console.log(user)
+                const user = result.user                
                 reset();
                 setLoginUserEmail(data.email);
             })
@@ -44,13 +42,11 @@ const Login = () => {
         setLoginError('');
         googleSignIn(googleAuthProvider)
             .then(result => {
-                const user = result.user
-                console.log(user)
+                const user = result.user                
                 const role = 'buyer'
                 saveUser(user.displayName, user.email, role);
             })
-            .catch(error => {
-                console.log(error)
+            .catch(error => {                
                 setLoginError(error.message)
             });
     }
@@ -71,8 +67,7 @@ const Login = () => {
             body: JSON.stringify(newUser)
         })
             .then(res => res.json())
-            .then(data => {
-                    console.log(data.acknowledged)
+            .then(data => {                    
                     setLoginUserEmail(email);
 
             })

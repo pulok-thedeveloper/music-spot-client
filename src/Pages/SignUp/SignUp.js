@@ -22,12 +22,10 @@ const SignUp = () => {
     }
 
     const handleSignUp = data => {
-        console.log(data);
         setSignUPError('');
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user
-                console.log(user)
                 const userInfo = {
                     displayName: data.name
                 }
@@ -38,7 +36,6 @@ const SignUp = () => {
                     .catch(err => console.log(err));
             })
             .catch(error => {
-                console.log(error)
                 setSignUPError(error.message)
             });
 
@@ -49,14 +46,12 @@ const SignUp = () => {
         googleSignIn(googleAuthProvider)
             .then(result => {
                 const user = result.user
-                console.log(user)
 
                 const role = 'buyer'
                 saveUser(user.displayName, user.email, role);
 
             })
             .catch(error => {
-                console.log(error)
                 setSignUPError(error.message)
             });
     }

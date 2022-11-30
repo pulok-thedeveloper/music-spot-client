@@ -6,7 +6,6 @@ import { AuthContext } from '../../context/AuthProvider';
 const MyProducts = () => {
     const { user } = useContext(AuthContext);
 
-    console.log(user);
 
     const url = `https://music-spot-server.vercel.app/products?email=${user?.email}`;
 
